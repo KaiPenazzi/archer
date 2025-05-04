@@ -2,13 +2,7 @@ use crate::config::Packages;
 use std::process::Command;
 
 pub fn install_packages(packages: &Packages) -> Result<(), Box<dyn std::error::Error>> {
-    let pacman_missing: Vec<&String> = packages
-        .pacman
-        .packages
-        .iter()
-        .filter(|pkg| !is_installed(pkg))
-        .collect();
-
+    let pacman_missing: Vec<&String> = packages.pacman.get_not_installed();
     if !pacman_missing.is_empty() {
         println!("Installiere pacman Pakete...");
         Command::new("sudo")
@@ -17,13 +11,7 @@ pub fn install_packages(packages: &Packages) -> Result<(), Box<dyn std::error::E
             .status()?;
     }
 
-    let aur_missing: Vec<&String> = packages
-        .aur
-        .packages
-        .iter()
-        .filter(|pkg| !is_installed(pkg))
-        .collect();
-
+    let aur_missing: Vec<&String> = packages.aur.get_not_installed();
     if !aur_missing.is_empty() {
         println!("Installiere AUR Pakete...");
         Command::new("aura")
@@ -35,7 +23,7 @@ pub fn install_packages(packages: &Packages) -> Result<(), Box<dyn std::error::E
     Ok(())
 }
 
-fn is_installed(pkg: &str) -> bool {
+pub fn is_installed(pkg: &str) -> bool {
     Command::new("pacman")
         .args(["-Q", pkg])
         .output()
