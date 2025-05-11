@@ -1,3 +1,4 @@
+mod archer_file;
 mod config;
 mod installer;
 mod repo;

@@ -24,7 +24,7 @@ pub struct Packages {
 }
 
 pub fn load_toml(repo_path: &str) -> Result<Packages, Box<dyn std::error::Error>> {
-    let path = Path::new(repo_path).join("arch/packages.toml");
+    let path = Path::new(repo_path).join("arch").join("packages.toml");
     let content = fs::read_to_string(path)?;
     let packages: Packages = toml::from_str(&content)?;
     Ok(packages)

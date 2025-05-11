@@ -6,6 +6,8 @@ use std::{
 
 use fs_extra::dir::{CopyOptions, copy};
 
+use crate::archer_file::ArcherFile;
+
 pub fn install_config(repo: &str) -> Result<(), Box<dyn std::error::Error>> {
     let home_dir = env::var("HOME")?;
     let target = Path::new(&home_dir).join(".config");
@@ -19,6 +21,13 @@ pub fn install_config(repo: &str) -> Result<(), Box<dyn std::error::Error>> {
 
             if folder_name == ".git" {
                 continue;
+            };
+
+            match ArcherFile::new(&path) {
+                Some(archer_file) => {
+                    archer_file.add_bashrc();
+                }
+                None => {}
             }
 
             copy(
