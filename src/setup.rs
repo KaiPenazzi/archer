@@ -6,7 +6,7 @@ use std::{
 
 use fs_extra::dir::{CopyOptions, copy};
 
-use crate::archer_file::ArcherFile;
+use crate::model::archer_file::ArcherFile;
 
 pub fn install_config(repo: &str) -> Result<(), Box<dyn std::error::Error>> {
     let home_dir = env::var("HOME")?;
@@ -26,6 +26,10 @@ pub fn install_config(repo: &str) -> Result<(), Box<dyn std::error::Error>> {
             match ArcherFile::new(&path) {
                 Some(archer_file) => {
                     archer_file.add_bashrc();
+                    archer_file.install_packages().expect(&format!(
+                        "could not install package for {}",
+                        path.to_str().unwrap()
+                    ));
                 }
                 None => {}
             }

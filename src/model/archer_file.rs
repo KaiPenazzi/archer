@@ -7,10 +7,15 @@ use std::{
 
 use serde::Deserialize;
 
+use crate::installer;
+
+use super::packages::Packages;
+
 #[derive(Debug, Deserialize)]
 pub struct ArcherFile {
     name: String,
     bashrc: Option<Vec<String>>,
+    packages: Option<Packages>,
 }
 
 impl ArcherFile {
@@ -24,7 +29,14 @@ impl ArcherFile {
             }
         };
 
-        toml::from_str(&content).unwrap_or_else(|_| None)
+        match toml::from_str(&content) {
+            Ok(parsed) => parsed,
+            Err(err) => {
+                println!("could not parse: {}", path.to_str().unwrap());
+                println!("{}", err);
+                None
+            }
+        }
     }
 
     pub fn add_bashrc(&self) {
@@ -84,6 +96,16 @@ impl ArcherFile {
         for line in new_bashrc {
             file.write(format!("{}\n", line).as_bytes())
                 .expect("Failed to write to .bashrc");
+        }
+    }
+
+    pub fn install_packages(&self) -> Result<(), Box<dyn std::error::Error>> {
+        match &self.packages {
+            Some(packages) => {
+                installer::install_packages(packages)?;
+                Ok(())
+            }
+            None => Ok(()),
         }
     }
 }
