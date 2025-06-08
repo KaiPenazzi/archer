@@ -40,6 +40,10 @@ impl ArcherFile {
     }
 
     pub fn add_bashrc(&self) {
+        if self.bashrc == None {
+            return;
+        }
+
         let bashrc_path = Path::new(&env::var("HOME").unwrap()).join(".bashrc");
         let bashrc = fs::File::open(&bashrc_path).unwrap();
         let reader = BufReader::new(bashrc);
