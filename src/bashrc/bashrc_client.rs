@@ -5,9 +5,9 @@ use std::{
     path::Path,
 };
 
-use super::BashrcLine::BashrcLine;
+use super::bashrc_line::BashrcLine;
 
-struct BashrcClient {
+pub struct BashrcClient {
     name: String,
     lines: Vec<String>,
 }

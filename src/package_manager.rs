@@ -4,16 +4,18 @@ use std::{
     process::{Command, Stdio},
 };
 
-struct PackageManager {
+use crate::model::packages::Packages;
+
+pub struct PackageManager {
     aur: Option<Vec<String>>,
     pacman: Option<Vec<String>>,
 }
 
 impl PackageManager {
-    pub fn new(pacman: Option<Vec<String>>, aur: Option<Vec<String>>) -> Self {
+    pub fn new(packages: Packages) -> Self {
         Self {
-            aur: aur,
-            pacman: pacman,
+            aur: packages.aur,
+            pacman: packages.pacman,
         }
     }
 
