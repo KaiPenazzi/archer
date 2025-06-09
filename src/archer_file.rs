@@ -8,7 +8,6 @@ use crate::{
     package_manager::PackageManager,
 };
 
-#[derive(Default)]
 pub struct ArcherFile {
     bashrc: Option<BashrcClient>,
     packages: Option<PackageManager>,
