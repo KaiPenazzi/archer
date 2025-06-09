@@ -1,2 +1,2 @@
-mod BashrcClient;
-mod BashrcLine;
+mod bashrc_client;
+mod bashrc_line;

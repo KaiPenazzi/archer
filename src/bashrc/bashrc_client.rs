@@ -13,6 +13,13 @@ struct BashrcClient {
 }
 
 impl BashrcClient {
+    pub fn new(name: String, lines: Vec<String>) -> Self {
+        Self {
+            name: name,
+            lines: lines,
+        }
+    }
+
     pub fn to_bashrc(&self) {
         let bashrc_path = Path::new(&env::var("HOME").unwrap()).join(".bashrc");
         let bashrc = fs::File::open(&bashrc_path).unwrap();

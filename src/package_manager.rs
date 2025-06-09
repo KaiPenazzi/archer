@@ -10,6 +10,13 @@ struct PackageManager {
 }
 
 impl PackageManager {
+    pub fn new(pacman: Option<Vec<String>>, aur: Option<Vec<String>>) -> Self {
+        Self {
+            aur: aur,
+            pacman: pacman,
+        }
+    }
+
     pub fn install(&self) {
         if let Some(pkgs) = &self.pacman {
             let pacman_missing: Vec<&String> = Self::get_missing_packages(pkgs);

@@ -1,7 +1,7 @@
-mod PackageManager;
 mod bashrc;
 mod installer;
 mod model;
+mod package_manager;
 mod repo;
 mod setup;
 
