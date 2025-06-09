@@ -1,3 +1,4 @@
+mod PackageManager;
 mod installer;
 mod model;
 mod repo;
