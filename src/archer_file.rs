@@ -1,19 +1,15 @@
 use std::{
-    env,
-    fs::{self, File},
-    io::{BufRead, BufReader, Write},
+    fs::{self},
     path::Path,
 };
 
 use crate::{
-    bashrc::bashrc_client::BashrcClient,
-    model::{self, raw_archer_file::RawArcherFile},
+    bashrc::bashrc_client::BashrcClient, model::raw_archer_file::RawArcherFile,
     package_manager::PackageManager,
 };
 
 #[derive(Default)]
 pub struct ArcherFile {
-    name: String,
     bashrc: Option<BashrcClient>,
     packages: Option<PackageManager>,
 }
@@ -35,7 +31,6 @@ impl ArcherFile {
             .ok()?;
 
         Some(Self {
-            name: raw.name.clone(),
             bashrc: raw.bashrc.map(|b| BashrcClient::new(raw.name.clone(), b)),
             packages: raw.packages.map(|p| PackageManager::new(p)),
         })

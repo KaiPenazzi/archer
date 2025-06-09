@@ -1,3 +1,5 @@
+use package_manager::PackageManager;
+
 mod archer_file;
 mod bashrc;
 mod model;
@@ -8,6 +10,7 @@ mod setup;
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let repo = repo::get_repo("configs", "git@github.com:KaiPenazzi/configs.git")?;
 
+    PackageManager::install_aura()?;
     setup::install_config(&repo)?;
 
     println!("Setup abgeschlossen!");
