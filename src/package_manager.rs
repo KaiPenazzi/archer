@@ -104,7 +104,7 @@ impl PackageManager {
             .arg("-U")
             .arg(pkg_path)
             .status()
-            .expect("Fehler beim Ausführen von pacman -U");
+            .expect("Fehler beim installieren von aura");
 
         Ok(())
     }

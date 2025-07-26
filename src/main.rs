@@ -18,7 +18,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let repo_url = match args.repo {
         Some(repo) => repo,
-        None => env::var("CONFIG_REPO").expect("set CONFIG_REPO or execute with --repo"),
+        None => env::var("CONFIG_REPO").expect("set CONFIG_REPO or execute with --repo <Rep URL>"),
     };
 
     let repo = repo::get_repo("configs", &repo_url)?;
