@@ -9,7 +9,7 @@ use super::bashrc_line::BashrcLine;
 
 pub struct BashrcClient {
     name: String,
-    lines: Vec<String>,
+    pub lines: Vec<String>,
 }
 
 impl BashrcClient {

@@ -7,8 +7,8 @@ use std::{
 use crate::model::packages::Packages;
 
 pub struct PackageManager {
-    aur: Option<Vec<String>>,
-    pacman: Option<Vec<String>>,
+    pub aur: Option<Vec<String>>,
+    pub pacman: Option<Vec<String>>,
 }
 
 impl PackageManager {
@@ -107,5 +107,23 @@ impl PackageManager {
             .expect("Fehler beim installieren von aura");
 
         Ok(())
+    }
+
+    pub fn remove(packages: Vec<String>) {
+        if packages.len() > 0 {
+            println!("remove packages: ");
+            Command::new("aura")
+                .args(["-R", "--noconfirm"])
+                .args(&packages)
+                .status()
+                .expect("could not remove packages");
+        }
+    }
+
+    pub fn packages(&self) -> Packages {
+        Packages {
+            pacman: self.pacman.clone(),
+            aur: self.aur.clone(),
+        }
     }
 }

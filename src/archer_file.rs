@@ -4,13 +4,15 @@ use std::{
 };
 
 use crate::{
-    bashrc::bashrc_client::BashrcClient, model::raw_archer_file::RawArcherFile,
+    bashrc::bashrc_client::BashrcClient,
+    model::{packages::Packages, raw_archer_file::RawArcherFile},
     package_manager::PackageManager,
 };
 
 pub struct ArcherFile {
+    pub name: String,
     bashrc: Option<BashrcClient>,
-    packages: Option<PackageManager>,
+    pub packages: Option<PackageManager>,
 }
 
 impl ArcherFile {
@@ -30,6 +32,7 @@ impl ArcherFile {
             .ok()?;
 
         Some(Self {
+            name: raw.name.clone(),
             bashrc: raw.bashrc.map(|b| BashrcClient::new(raw.name.clone(), b)),
             packages: raw.packages.map(|p| PackageManager::new(p)),
         })
@@ -41,6 +44,24 @@ impl ArcherFile {
         }
         if let Some(bashrc) = &self.bashrc {
             bashrc.to_bashrc();
+        }
+    }
+
+    pub fn raw(&self) -> RawArcherFile {
+        let packages = match &self.packages {
+            Some(packages) => Some(packages.packages()),
+            None => None,
+        };
+
+        let bashrc = match &self.bashrc {
+            Some(bashrc) => Some(bashrc.lines.clone()),
+            None => None,
+        };
+
+        RawArcherFile {
+            name: self.name.clone(),
+            bashrc: bashrc,
+            packages: packages,
         }
     }
 }
