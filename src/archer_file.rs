@@ -4,8 +4,7 @@ use std::{
 };
 
 use crate::{
-    bashrc::bashrc_client::BashrcClient,
-    model::{packages::Packages, raw_archer_file::RawArcherFile},
+    bashrc::bashrc_client::BashrcClient, model::raw_archer_file::RawArcherFile,
     package_manager::PackageManager,
 };
 

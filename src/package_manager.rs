@@ -89,8 +89,12 @@ impl PackageManager {
         let entries = fs::read_dir(aura_dir)?
             .filter_map(|entry| entry.ok())
             .filter(|entry| {
+                let binding = entry.file_name();
+                let file_name = binding.to_string_lossy();
+
                 entry.path().extension().map_or(false, |ext| ext == "zst")
-                    && entry.file_name().to_string_lossy().contains("pkg.tar")
+                    && file_name.contains("pkg.tar")
+                    && !file_name.contains("debug")
             })
             .collect::<Vec<_>>();
 
