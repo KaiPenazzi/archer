@@ -21,7 +21,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         None => env::var("CONFIG_REPO").expect("set CONFIG_REPO or execute with --repo <Rep URL>"),
     };
 
-    let repo = repo::get_repo("configs", &repo_url)?;
+    let branch = args.branch.or_else(|| env::var("CONFIG_BRANCH").ok());
+
+    let repo = repo::get_repo("configs", &repo_url, branch.as_deref())?;
 
     PackageManager::install_aura()?;
     setup::install_config(&repo, args.program.as_deref())?;

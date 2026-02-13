@@ -7,4 +7,6 @@ pub struct ARGs {
     pub program: Option<String>,
     #[arg(short, long)]
     pub repo: Option<String>,
+    #[arg(short, long)]
+    pub branch: Option<String>,
 }
